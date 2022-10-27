@@ -1,11 +1,16 @@
+from unicodedata import name
 import streamlit as st
 
-st.title("Hello Tanvir")
-st.header("Header")
-st.subheader("Sub-Header this is test")
-st.text("This is a text for streamlit dash board details")
+st.title("Wedgets")
+if st.button("Subscribe"):
+    st.write("Like this video too")
 
-st.markdown(""" # h1 tag
-## h2 tag
-### h3 tag
-""")
+name = st.text_input("Full Name")
+st.write(name)
+
+address = st.text_area("Enter your Address")
+st.write(address)
+
+st.date_input("Enter a date")
+
+st.time_input("Enter time")
