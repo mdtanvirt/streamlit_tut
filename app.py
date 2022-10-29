@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from matplotlib import  pyplot as plt
 from plotly import graph_objs as go
+from sklearn.linear_model import LinearRegression
+import numpy as np
 
 # Hide streamlit default menu and footer from the template
 hide_st_style = """
@@ -14,6 +16,10 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 data = pd.read_csv("data//dalary_data.csv")
+
+x = np.array(data["YearsExperience"]).reshape(-1,1)
+lr = LinearRegression()
+lr.fit(x, np.array(data["Salary"]))
 
 st.title("Salary predictor")
 nav = st.sidebar.radio("Navigation", ["Home", "Prediction", "Conribute"])
@@ -46,7 +52,13 @@ if nav == "Home":
         st.plotly_chart(fig)
 
 if nav == "Prediction":
-    st.write("Prediction")
+    st.header("Know your salary")
+    val = st.number_input("Enter your year of experience", 0.00, 20.00, step=0.25)
+    val = np.array(val).reshape(1, -1)
+    predict = lr.predict(val)[0]
+
+    if st.button("Predict"):
+        st.success(f"Your predicted salary is {round(predict)}")
 
 if nav == "Conribute":
     st.write("Conribute")
