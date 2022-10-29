@@ -1,5 +1,9 @@
+from msilib.schema import CheckBox
 from unicodedata import name
 import streamlit as st
+import pandas as pd
+from matplotlib import  pyplot as plt
+from plotly import graph_objs as go
 
 # Hide streamlit default menu and footer from the template
 hide_st_style = """
@@ -11,35 +15,32 @@ hide_st_style = """
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-st.title("Wedgets")
-if st.button("Subscribe"):
-    st.write("Like this video too")
+data = pd.read_csv("data//dalary_data.csv")
 
-name = st.text_input("Full Name")
-st.write(name)
+st.title("Salary predictor")
+nav = st.sidebar.radio("Navigation", ["Home", "Prediction", "Conribute"])
 
-address = st.text_area("Enter your Address")
-st.write(address)
+if nav == "Home":
+    st.write("Well come to salary prediction calculator")
+    if st.checkbox("Show raw data"):
+        st.table(data)
 
-st.date_input("Enter a date")
+    grapg = st.selectbox("What kind of Graph?", ["Non-Interactive", "Interactive"])
+    
+    if grapg == "Non-Interactive":
+        plt.figure(figsize=(10, 5))
+        plt.scatter(data["YearsExperience"], data["Salary"])
+        plt.ylim(0)
+        plt.xlabel("Year of Enperience")
+        plt.ylabel("Salary")
+        plt.tight_layout()
+        st.pyplot()
 
-st.time_input("Enter time")
+    if grapg == "Interactive":
+        pass
 
-if st.checkbox("You have to accept the T&C", value=False):
-    st.write("Thank you")
+if nav == "Prediction":
+    st.write("Prediction")
 
-v1 = st.radio("Color", ["r", "g", "b"], index=0)
-v2 = st.selectbox("Color", ["r", "g", "b"], index=1)
-
-st.write(v1, v2)
-
-v3 = st.multiselect("Color", ["r", "g", "b"])
-st.write(v3)
-
-st.slider('age', min_value=18, max_value=60, value=30, step=2)
-
-st.number_input("Number", min_value=18.0, max_value=60.0, value=30.0, step=2.0)
-
-st.file_uploader("Upload a file")
-
-st.sidebar.title("This is sidebar")
+if nav == "Conribute":
+    st.write("Conribute")
