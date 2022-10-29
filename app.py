@@ -5,6 +5,8 @@ from plotly import graph_objs as go
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
+st.set_page_config(layout="wide")
+
 # Hide streamlit default menu and footer from the template
 hide_st_style = """
     <style>
@@ -45,7 +47,7 @@ if nav == "Home":
 
     if grapg == "Interactive":
         layout = go.Layout(
-            xaxis = dict(range=[0,16]),
+            xaxis = dict(range=[0,30]),
             yaxis = dict(range=[0, 210000])
         )
         fig = go.Figure(data=go.Scatter(x=data["YearsExperience"], y=data["Salary"], mode="markers"), layout=layout)
