@@ -1,9 +1,6 @@
-from msilib.schema import CheckBox
-from unicodedata import name
 import streamlit as st
 import pandas as pd
 from matplotlib import  pyplot as plt
-from plotly import graph_objs as go
 
 # Hide streamlit default menu and footer from the template
 hide_st_style = """
